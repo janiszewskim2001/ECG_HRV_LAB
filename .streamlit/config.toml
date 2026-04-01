@@ -3,4 +3,4 @@ primaryColor="#FF9900"            # Kolor suwaków i aktywnych elementów
 backgroundColor="#0e1117"         # Ciemne tło aplikacji
 secondaryBackgroundColor="#1a1c23" ## Tło sidebaru i widgetów
 textColor="#ffffff"               # Biała trzcionka
-font="Arial"                      
+font="MokiLean"                      
