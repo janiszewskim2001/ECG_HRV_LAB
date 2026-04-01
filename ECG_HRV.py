@@ -19,8 +19,8 @@ else:
 st.set_page_config(layout="wide", page_title="Analiza EKG i EMD")
 
 # Kolory (Nasz Dark Mode)
-kolor_sygnalu = "#00FFAA"  # Neonowa Morska Zieleń
-kolor_analizy = "#FF9900"  # Pomarańcz
+kolor_sygnalu = "#00FFAA"  # Neonowa zieleń
+kolor_analizy = "#FF9900"  # Pomarańczowy
 ciemny_szary  = "#2d3436"
 tlo_glowne    = "#0e1117"
 lekki_szary   = "#1a1c23"
@@ -39,7 +39,6 @@ st.markdown(f"""
     </style>
     """, unsafe_allow_html=True)
     
-# Funkcja do nakładania naszego mrocznego stylu na wykresy (odchudza kod!)
 def aplikuj_ciemny_motyw(figura, wys=350):
     figura.update_layout(
         height=wys, margin=dict(l=10, r=10, t=30, b=10),
@@ -77,7 +76,6 @@ min_czas, max_czas = float(df_all['czas'].min()), float(df_all['czas'].max())
 zakres_czasu = st.slider("Zakres czasu do analizy [s]:", min_czas, max_czas, (min_czas, min(min_czas + 20.0, max_czas)), 0.1)
 
 df = df_all[(df_all['czas'] >= zakres_czasu[0]) & (df_all['czas'] <= zakres_czasu[1])].copy()
-df['ecg'] = df['ecg'] + 1.5 * np.sin(2 * np.pi * 0.5 * df['czas'])#psujemy
 
 if len(df) > 28000:
     st.warning("Uwaga: W sekcji EMD zostanie przetworzone tylko pierwsze 28000 próbek ze względu na obciążenie procesora.")
@@ -129,9 +127,9 @@ if len(peaks) > 1:
     rr_intervals = np.diff(czas_pikow) * 1000  
     
     m1, m2, m3 = st.columns(3)
-    with m1: st.metric("Średnie Tętno (BPM)", f"{60000 / np.mean(rr_intervals):.0f} ud./min")
-    with m2: st.metric("SDNN (Zmienność)", f"{np.std(rr_intervals):.1f} ms")
-    with m3: st.metric("RMSSD (Przywspółczulna)", f"{np.sqrt(np.mean(np.diff(rr_intervals)**2)):.1f} ms")
+    with m1: st.metric("Średnie tętno (BPM)", f"{60000 / np.mean(rr_intervals):.0f} ud./min")
+    with m2: st.metric("SDNN (zmienność)", f"{np.std(rr_intervals):.1f} ms")
+    with m3: st.metric("RMSSD", f"{np.sqrt(np.mean(np.diff(rr_intervals)**2)):.1f} ms")
 
     with st.container(border=True):
         fig_peaks = go.Figure()
