@@ -1,0 +1,10 @@
+streamlit>=1.30.0
+altair<5
+pandas
+matplotlib
+numpy
+scipy
+seaborn
+plotly
+neurokit2
+jinja2
