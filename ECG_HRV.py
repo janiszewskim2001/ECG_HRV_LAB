@@ -77,6 +77,7 @@ min_czas, max_czas = float(df_all['czas'].min()), float(df_all['czas'].max())
 zakres_czasu = st.slider("Zakres czasu do analizy [s]:", min_czas, max_czas, (min_czas, min(min_czas + 20.0, max_czas)), 0.1)
 
 df = df_all[(df_all['czas'] >= zakres_czasu[0]) & (df_all['czas'] <= zakres_czasu[1])].copy()
+
 if len(df) > 28000:
     st.warning("Uwaga: W sekcji EMD zostanie przetworzone tylko pierwsze 28000 próbek ze względu na obciążenie procesora.")
 
@@ -92,6 +93,7 @@ with colB:
 with st.container(border=True):
     fig_glowny = go.Figure()
     fig_glowny.add_trace(go.Scatter(x=df_all['czas'], y=df_all['ecg'], name='Pozostała część', line=dict(color="#444444", width=1)))
+     fig_glowny.add_trace(go.Scatter(df['czas']-0.3np.sin(5*df['czas'])
     fig_glowny.add_trace(go.Scatter(x=df['czas'], y=df['ecg'], name='Fragment do analizy', line=dict(color=kolor_sygnalu, width=2)))
     fig_glowny = aplikuj_ciemny_motyw(fig_glowny)
     fig_glowny.update_layout(xaxis_title="Czas [s]", yaxis_title="Amplituda [mV]")
